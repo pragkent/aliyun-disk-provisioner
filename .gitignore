@@ -1,0 +1,5 @@
+*.test
+*.swp
+bin/
+dist/
+terraform.tfstate*

@@ -1,0 +1,4 @@
+.git/
+vendor/
+dist/darwin_amd64/
+bin/

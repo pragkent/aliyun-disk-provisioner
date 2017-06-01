@@ -1,0 +1,20 @@
+package: github.com/pragkent/aliyun-disk-provisioner
+import:
+- package: github.com/golang/glog
+- package: github.com/kubernetes-incubator/external-storage
+  version: v3.0.0-beta
+  subpackages:
+  - lib/controller
+- package: k8s.io/apimachinery
+  subpackages:
+  - pkg/util/wait
+- package: k8s.io/client-go
+  subpackages:
+  - kubernetes
+  - rest
+  - tools/clientcmd
+- package: github.com/denverdino/aliyungo
+  subpackages:
+  - ecs
+  - common
+  - metadata
