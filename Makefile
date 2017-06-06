@@ -18,6 +18,9 @@ testrace: fmtcheck
 testcover: fmtcheck
 	go test -cover $(PACKAGES)
 
+docker: bin
+	./scripts/docker
+
 vet:
 	@echo "go vet ."
 	@go vet $(PACKAGES) ; if [ $$? -eq 1 ]; then \
@@ -36,4 +39,4 @@ fmtcheck:
 tools:
 	go get github.com/mitchellh/gox
 
-.PHONY: bin package test testrace testcover vet fmt fmtcheck tools
+.PHONY: bin package test testrace testcover vet fmt fmtcheck tools docker

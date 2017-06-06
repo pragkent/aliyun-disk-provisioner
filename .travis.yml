@@ -7,4 +7,6 @@ go:
   - 1.7
   - 1.8
 
-script: make test testrace
+script:
+  - make test testrace
+  - make docker

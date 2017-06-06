@@ -64,7 +64,7 @@ func (p *aliyunProvider) probeVpcId() string {
 		return ""
 	}
 
-	glog.Infof("Metadata.VpcID passed. VpcId: %s", vpcId)
+	glog.V(2).Infof("Metadata.VpcID passed. VpcId: %s", vpcId)
 	return vpcId
 }
 

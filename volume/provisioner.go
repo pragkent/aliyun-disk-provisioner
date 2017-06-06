@@ -149,7 +149,7 @@ func (p *aliyunDiskProvisioner) deleteVolume(volume *v1.PersistentVolume) error 
 	}
 
 	if err := p.provider.DeleteDisk(diskId); err != nil {
-		glog.Infof("Provider.DeleteVolume error. %v. DiskId: %s", err, diskId)
+		glog.Errorf("Provider.deleteVolume error. %v. DiskId: %s", err, diskId)
 		return errors.New("provider delete volume error")
 	}
 

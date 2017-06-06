@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 
@@ -19,21 +21,36 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-const ()
-
 var (
 	id          = flag.String("id", "default", "Unique provisioner identity")
 	provisioner = flag.String("provisioner", "pragkent.me/aliyun-disk", "Name of the provisioner")
 	master      = flag.String("master", "", "Master URL")
 	kubeconfig  = flag.String("kubeconfig", "", "Absolute path to the kubeconfig")
 	cluster     = flag.String("cluster", "", "Cluster name")
+	version     = flag.Bool("version", false, "Show version")
 )
 
 func main() {
 	flag.Parse()
 	flag.Set("logtostderr", "true")
 
+	if *version {
+		os.Exit(printVersion())
+	}
+
 	os.Exit(run())
+}
+
+func printVersion() int {
+	var versionString bytes.Buffer
+
+	fmt.Fprintf(&versionString, "%s version %s", Name, Version)
+	if GitCommit != "" {
+		fmt.Fprintf(&versionString, " (%s)", GitCommit)
+	}
+
+	fmt.Println(versionString.String())
+	return 0
 }
 
 func run() int {
