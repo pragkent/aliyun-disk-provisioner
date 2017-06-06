@@ -10,4 +10,5 @@ go:
 
 script:
   - make test testrace
+  - make tools
   - make docker
