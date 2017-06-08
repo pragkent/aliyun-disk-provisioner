@@ -101,7 +101,7 @@ func (p *aliyunDiskProvisioner) createVolume(options controller.VolumeOptions) (
 		return "", 0, nil, fmt.Errorf("provider.CreateDisk error: %v", err)
 	}
 
-	return diskId, 0, p.getVolumeLabels(zone), nil
+	return diskId, requestGB, p.getVolumeLabels(zone), nil
 }
 
 func (p *aliyunDiskProvisioner) getVolumeAnnotations() map[string]string {
