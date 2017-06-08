@@ -107,6 +107,7 @@ func (p *aliyunDiskProvisioner) createVolume(options controller.VolumeOptions) (
 func (p *aliyunDiskProvisioner) getVolumeAnnotations() map[string]string {
 	annotations := make(map[string]string)
 	annotations[annCreatedByKey] = annCreatedBy
+	annotations[annProvisionerIdentityKey] = p.identity
 	return annotations
 }
 
@@ -137,7 +138,7 @@ func (p *aliyunDiskProvisioner) Delete(volume *v1.PersistentVolume) error {
 		return err
 	}
 
-	glog.Info("Successfully deleted Aliyun Disk volume %s", volume.Name)
+	glog.Infof("Successfully deleted Aliyun Disk volume %s", volume.Name)
 	return nil
 }
 
