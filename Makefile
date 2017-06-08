@@ -18,7 +18,8 @@ testrace: fmtcheck
 testcover: fmtcheck
 	go test -cover $(PACKAGES)
 
-docker: bin
+docker:
+	CGO_ENABLED=0 ./scripts/build
 	./scripts/docker
 
 vet:
