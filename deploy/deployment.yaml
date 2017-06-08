@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: aliyundisk-provisioner
+  namespace: kube-system
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: aliyundisk-provisioner
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      serviceAccountName: persistent-volume-provisioner
+      containers:
+      - name: aliyundisk-provisioner
+        image: pragkent/aliyundisk-provisioner:0.1.0
+        command:
+        - aliyundisk-provisioner
+        - -id=provisioner-0
+        - -provisioner=cheanjiait.com/aliyun-disk
+        env:
+        - name: ALIYUN_REGION
+          value: cn-shanghai
+        - name: ALIYUN_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aliyun-credentials
+              key: access_key
+        - name: ALIYUN_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aliyun-credentials
+              key: secret_key
+        volumeMounts:
+        - name: sslcerts
+          mountPath: /etc/ssl/certs
+          readOnly: true
+      volumes:
+        - name: sslcerts
+          hostPath:
+            path: /etc/ssl/certs
