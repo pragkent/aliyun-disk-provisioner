@@ -90,6 +90,7 @@ func (p *aliyunProvider) Zones() ([]string, error) {
 
 func (p *aliyunProvider) CreateDisk(args *CreateDiskArgs) (string, error) {
 	ecsArgs := &ecs.CreateDiskArgs{
+		RegionId:     p.region,
 		ZoneId:       args.Zone,
 		DiskName:     args.DiskName,
 		DiskCategory: ecs.DiskCategory(args.DiskCategory),
