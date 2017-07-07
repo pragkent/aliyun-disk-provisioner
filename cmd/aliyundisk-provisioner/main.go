@@ -83,6 +83,9 @@ func run() int {
 		*provisioner,
 		pr,
 		serverVersion.GitVersion)
+
+	pc.SetFailedProvisionThreshold(15)
+	pc.SetFailedDeleteThreshold(15)
 	pc.Run(wait.NeverStop)
 
 	return 0
