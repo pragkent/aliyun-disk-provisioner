@@ -16,6 +16,7 @@ type CreateDiskArgs struct {
 	DiskCategory DiskCategory
 	Size         int
 	Description  string
+	Encrypted    bool
 }
 
 type Disk ecs.DiskType

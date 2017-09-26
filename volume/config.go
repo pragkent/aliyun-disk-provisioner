@@ -2,6 +2,7 @@ package volume
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/kubernetes-incubator/external-storage/lib/controller"
@@ -11,8 +12,9 @@ import (
 )
 
 type diskConfig struct {
-	Category string
-	Zones    sets.String
+	Category  string
+	Zones     sets.String
+	Encrypted bool
 }
 
 func (c *diskConfig) ChooseZoneForVolume(name string) string {
@@ -20,7 +22,9 @@ func (c *diskConfig) ChooseZoneForVolume(name string) string {
 }
 
 func parseDiskConfig(options controller.VolumeOptions, provider cloud.Provider) (*diskConfig, error) {
+	var err error
 	var category, zone, zones string
+	var encrypted bool
 
 	for k, v := range options.Parameters {
 		switch strings.ToLower(k) {
@@ -30,6 +34,11 @@ func parseDiskConfig(options controller.VolumeOptions, provider cloud.Provider) 
 			zone = v
 		case "zones":
 			zones = v
+		case "encrypted":
+			encrypted, err = strconv.ParseBool(v)
+			if err != nil {
+				return nil, fmt.Errorf("invalid encrypted boolean value %q, must be true or false: %v", v, err)
+			}
 		default:
 			return nil, fmt.Errorf("invalid StorageClass option %q", k)
 		}
@@ -41,8 +50,9 @@ func parseDiskConfig(options controller.VolumeOptions, provider cloud.Provider) 
 	}
 
 	cfg := &diskConfig{
-		Category: category,
-		Zones:    zoneSet,
+		Category:  category,
+		Zones:     zoneSet,
+		Encrypted: encrypted,
 	}
 	return cfg, nil
 }

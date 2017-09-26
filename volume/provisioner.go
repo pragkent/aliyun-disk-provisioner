@@ -94,6 +94,7 @@ func (p *aliyunDiskProvisioner) createVolume(options controller.VolumeOptions) (
 		DiskName:     diskName,
 		DiskCategory: cloud.DiskCategory(cfg.Category),
 		Size:         requestGB,
+		Encrypted:    cfg.Encrypted,
 	}
 
 	diskId, err := p.provider.CreateDisk(args)

@@ -96,6 +96,7 @@ func (p *aliyunProvider) CreateDisk(args *CreateDiskArgs) (string, error) {
 		DiskCategory: ecs.DiskCategory(args.DiskCategory),
 		Size:         args.Size,
 		Description:  args.Description,
+		Encrypted:    args.Encrypted,
 	}
 
 	diskId, err := p.ecsClient.CreateDisk(ecsArgs)
